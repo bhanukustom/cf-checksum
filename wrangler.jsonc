@@ -1,0 +1,46 @@
+{
+	"name": "cf-checksum",
+	"main": "src/index.js",
+	"compatibility_date": "2026-10-14",
+	"containers": [
+		{
+			"class_name": "ChecksumContainer",
+			"image": "./Dockerfile",
+			"max_instances": 1,
+			"instance_type": "lite"
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "ChecksumContainer",
+				"name": "CHECKSUM"
+			}
+		]
+	},
+	"exports": {
+		"ChecksumContainer": {
+			"type": "durable-object",
+			"storage": "sqlite"
+		}
+	},
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 1,
+		"redact_query_string": false,
+		"logs": {
+			"enabled": true,
+			"head_sampling_rate": 1,
+			"invocation_logs": true,
+			"persist": true
+		},
+		"traces": {
+			"enabled": true,
+			"head_sampling_rate": 1,
+			"persist": true
+		},
+		"issue_detection": {
+			"enabled": false
+		}
+	}
+}

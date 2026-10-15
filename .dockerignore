@@ -1,0 +1,8 @@
+.git
+.wrangler
+node_modules
+src
+README.md
+wrangler.jsonc
+.dev.vars
+.env
