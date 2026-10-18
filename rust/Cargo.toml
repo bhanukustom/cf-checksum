@@ -1,0 +1,13 @@
+[package]
+name = "checksum"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+sha2 = "0.10"
+tiny_http = "0.12"
+
+[profile.release]
+opt-level = "z"
+lto = true
+strip = true

@@ -70,6 +70,29 @@ npx wrangler@latest tail # live logs
 
 If `/checksum` errors right after the first deploy, wait ~1 minute and retry.
 
+## Rust version
+
+Same API, built from [rust/](rust/) (own `wrangler.jsonc`, deploys as the separate Worker `cf-checksum-rust`; reuses `src/index.js`).
+
+```bash
+# run locally
+(cd rust && CHECKSUM_DIR=../data cargo run --release) &
+sleep 5; curl -s localhost:4000/checksum; kill %1
+
+# docker (build context is the repo root, so data/ is reachable)
+docker build -f rust/Dockerfile -t cf-checksum-rust .
+docker run --rm -d --name cfc -p 4000:4000 cf-checksum-rust
+sleep 2; curl -s localhost:4000/checksum; docker rm -f cfc
+
+# deploy / verify / clean up
+cd rust
+npx wrangler@latest deploy
+npx wrangler@latest containers list
+npx wrangler@latest delete
+```
+
+URL: `https://cf-checksum-rust.<subdomain>.workers.dev`.
+
 ## Machine size
 
 Set `instance_type` in the container entry of `wrangler.jsonc` (default `lite`), then redeploy.

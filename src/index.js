@@ -3,7 +3,7 @@ import { DurableObject } from "cloudflare:workers";
 export class ChecksumContainer extends DurableObject {
 	async fetch(request) {
 		const c = this.ctx.container;
-		await c.setInactivityTimeout(5 * 60 * 1000);
+		await c.setInactivityTimeout(30 * 1000);
 		if (!c.running) c.start();
 		const port = c.getTcpPort(4000);
 		// start() returns before the container is ready, so poll /health.

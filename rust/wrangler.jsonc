@@ -1,0 +1,20 @@
+{
+	"name": "cf-checksum-rust",
+	"main": "../src/index.js",
+	"compatibility_date": "2026-10-14",
+	"containers": [
+		{
+			"class_name": "ChecksumContainer",
+			"image": "./Dockerfile",
+			"image_build_context": "..",
+			"max_instances": 1,
+			"instance_type": "lite"
+		}
+	],
+	"durable_objects": {
+		"bindings": [{ "class_name": "ChecksumContainer", "name": "CHECKSUM" }]
+	},
+	"exports": {
+		"ChecksumContainer": { "type": "durable-object", "storage": "sqlite" }
+	}
+}
